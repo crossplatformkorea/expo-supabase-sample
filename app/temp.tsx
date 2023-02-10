@@ -11,9 +11,9 @@ const Container = styled.View`
   justify-content: center;
 `;
 
-type Props = {}
+type Props = {};
 
-function Page(props: Props): React.ReactElement {
+function Page({}: Props): React.ReactElement {
   const {theme} = useDooboo();
   const router = useRouter();
 

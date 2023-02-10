@@ -2,6 +2,7 @@ import {act, fireEvent, render} from '@testing-library/react-native';
 import {createTestElement, createTestProps} from '../utils/testUtils';
 
 import {Button} from 'dooboo-ui';
+import * as expoRouter from 'expo-router';
 import Intro from '../../app/index';
 import type {ReactElement} from 'react';
 import type {RenderAPI} from '@testing-library/react-native';
@@ -84,13 +85,15 @@ describe('[Intro] Interaction', () => {
   });
 
   it('should navigate when button has clicked', () => {
+    const push = jest.fn();
+
+    jest.spyOn(expoRouter, 'useRouter').mockImplementation((): any => ({
+      push,
+    }));
+
     testingLib = render(component);
-
     fireEvent.press(testingLib.getByTestId('btn-navigate'));
-
-    expect(props.navigation.navigate).toHaveBeenCalledWith('Temp', {
-      param: 'GO BACK',
-    });
+    expect(push).toHaveBeenCalledWith('/temp');
   });
 
   // eslint-disable-next-line jest/expect-expect

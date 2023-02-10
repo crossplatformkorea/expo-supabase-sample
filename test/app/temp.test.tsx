@@ -1,5 +1,6 @@
 import {act, fireEvent, render} from '@testing-library/react-native';
 
+import * as expoRouter from 'expo-router';
 import type {ReactElement} from 'react';
 import Temp from '../../app/temp';
 import type {RenderAPI} from '@testing-library/react-native';
@@ -48,8 +49,12 @@ describe('[Temp] render', () => {
 
 describe('[Temp] Interaction', () => {
   let renderResult: RenderAPI;
+  const back = jest.fn();
 
   beforeEach(() => {
+    jest.spyOn(expoRouter, 'useRouter').mockImplementation((): any => ({
+      back,
+    }));
     renderResult = render(component);
   });
 
@@ -60,6 +65,6 @@ describe('[Temp] Interaction', () => {
       fireEvent.press(btnInstance);
     });
 
-    expect(props.navigation.goBack).toHaveBeenCalled();
+    expect(back).toHaveBeenCalled();
   });
 });
