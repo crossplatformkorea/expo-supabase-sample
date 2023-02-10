@@ -2,10 +2,10 @@
 
 DO NOT MODIFY OR CHANGE THE CODE BEFORE CONFIRMED BY `DOOBOOLAB`. THIS REPOSITORY IS USED IN `DOOBOO-CLI`.
 
-# Expo TS Boilerplate
+# Expo typescript starter with expo router
 
-[![CI](https://github.com/dooboolab/dooboo-expo/actions/workflows/ci.yml/badge.svg)](https://github.com/dooboolab/dooboo-expo/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/dooboolab/dooboo-expo/branch/main/graph/badge.svg)](https://codecov.io/gh/dooboolab/dooboo-expo)
+[![CI](https://github.com/dooboolab/dooboo-expo-router/actions/workflows/ci.yml/badge.svg)](https://github.com/dooboolab/dooboo-expo-router/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/dooboolab/dooboo-expo-router/branch/main/graph/badge.svg)](https://codecov.io/gh/dooboolab/dooboo-expo-router)
 
 > Specification
 

@@ -1,5 +1,5 @@
 {
-  "name": "dooboo-expo",
+  "name": "dooboo-expo-router",
   "packageManager": "yarn@3.3.1",
   "main": "index",
   "scripts": {

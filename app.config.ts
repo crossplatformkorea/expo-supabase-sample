@@ -3,7 +3,7 @@ import type {ConfigContext, ExpoConfig} from '@expo/config';
 export default ({config}: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'dooboo',
-  slug: 'dooboo-expo',
+  slug: 'dooboo-expo-router',
   privacy: 'public',
   platforms: ['ios', 'android', 'web'],
   version: '1.0.0',
