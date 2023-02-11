@@ -4,7 +4,7 @@ import {useCallback, useEffect, useState} from 'react';
 
 import Icons from '../src/utils/Icons';
 import RootProvider from '../src/providers';
-import { Slot } from 'expo-router';
+import {Slot} from 'expo-router';
 import {View} from 'react-native';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {useAssets} from 'expo-asset';
