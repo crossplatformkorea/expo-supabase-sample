@@ -24,7 +24,7 @@ function Page({}: Props): React.ReactElement {
         onPress={() => router.back()}
         startElement={
           <Icon
-            name="chevron-left-light"
+            name="ChevronLeftAlt"
             size={16}
             color={theme.text.contrast}
             style={{

@@ -17,8 +17,8 @@ const RootProvider = ({
   return (
     <DoobooProvider
       themeConfig={{
-        initialThemeType: initialThemeType,
-        customTheme: {theme},
+        initialThemeType: initialThemeType ?? 'light',
+        customTheme: theme,
       }}
     >
       <AppProvider>{children}</AppProvider>

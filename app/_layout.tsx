@@ -1,25 +1,72 @@
+import '@expo/match-media';
 import * as SplashScreen from 'expo-splash-screen';
-
 import {useCallback, useEffect, useState} from 'react';
-
 import Icons from '../src/utils/Icons';
 import RootProvider from '../src/providers';
-import {Slot} from 'expo-router';
-import {View} from 'react-native';
+import {Slot, Navigator} from 'expo-router';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 import {useAssets} from 'expo-asset';
 import {useFonts} from 'expo-font';
-import StatusBarBrightness from 'dooboo-ui/components/StatusbarBrightness';
+import styled, {css} from '@emotion/native';
+import RootNavigator from '../src/uis/RootNavigator';
+import {TabRouter} from '@react-navigation/native';
+import Header from '../src/uis/Header';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import StatusBarBrightness from 'dooboo-ui/uis/StatusbarBrightness';
+import type {StyleProp, ViewStyle} from 'react-native';
+import {Platform} from 'react-native';
+import {useDooboo} from 'dooboo-ui';
 
 SplashScreen.preventAutoHideAsync();
 
+const Container = styled.View`
+  flex: 1;
+  align-self: stretch;
+  background-color: ${({theme}) => theme.bg.default};
+
+  flex-direction: column-reverse;
+
+  ${({theme: {isMobile}}) =>
+    !isMobile &&
+    css`
+      flex-direction: row;
+    `}
+`;
+
+const NavigatorWrapper = styled.View``;
+
+const Contents = styled.View`
+  flex: 1;
+  align-self: stretch;
+`;
+
 function App(): React.ReactElement | null {
   const [fontsLoaded] = useFonts({
-    IcoMoon: require('dooboo-ui/components/Icon/doobooui.ttf'),
+    IcoMoon: require('dooboo-ui/uis/Icon/doobooui.ttf'),
   });
 
+  const onIos = Platform.OS === 'ios';
+  const onMobile = Platform.OS === 'android' || Platform.OS === 'ios';
+
+  const {
+    media: {isPortrait},
+  } = useDooboo();
+
+  const insets = useSafeAreaInsets();
   const [assets] = useAssets(Icons);
   const [appIsReady, setAppIsReady] = useState(false);
+
+  const safeAreaStyles: StyleProp<ViewStyle> = [
+    onMobile && {paddingTop: Math.max(insets.top, 20)},
+    onMobile && isPortrait && {paddingBottom: Math.min(insets.bottom, 10)},
+    !isPortrait &&
+      onIos && {
+        paddingLeft: Math.max(insets.left, 8),
+      },
+  ];
 
   useEffect(() => {
     const prepare = async (): Promise<void> => {
@@ -56,13 +103,20 @@ function App(): React.ReactElement | null {
   }
 
   return (
-    <View
-      style={{flex: 1, flexDirection: 'column'}}
-      onLayout={onLayoutRootView}
-    >
-      <StatusBarBrightness />
-      <Slot />
-    </View>
+    <SafeAreaProvider>
+      <Navigator router={TabRouter} initialRouteName="/">
+        <StatusBarBrightness />
+        <Container onLayout={onLayoutRootView} style={safeAreaStyles}>
+          <NavigatorWrapper>
+            <RootNavigator />
+          </NavigatorWrapper>
+          <Contents>
+            <Header />
+            <Slot />
+          </Contents>
+        </Container>
+      </Navigator>
+    </SafeAreaProvider>
   );
 }
 

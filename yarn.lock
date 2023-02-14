@@ -1855,8 +1855,8 @@ __metadata:
   linkType: hard
 
 "@dooboo-ui/theme@npm:^0.10.1":
-  version: 0.10.3
-  resolution: "@dooboo-ui/theme@npm:0.10.3"
+  version: 0.10.5
+  resolution: "@dooboo-ui/theme@npm:0.10.5"
   dependencies:
     react-responsive: ^9.0.0
   peerDependencies:
@@ -1864,7 +1864,7 @@ __metadata:
     "@emotion/react": ">=11"
     react: ">=16.9"
     react-native: ">=0.58"
-  checksum: b6bf65a3af4b1c428ea453dfad78484326d45007117351432874d6b2f042a04424a78efbf7826ae9fdefb55b5b73f96e0da3d75958d33b574829bbae583494b5
+  checksum: 4cf05edb9c1cd32ee1ae115b50d4d5b966149c84359ef89fda86b3c20cebb35501ac59f581c5b03c75cbb6aafa29853e14687e922c33fc11a5a752a8aba261e9
   languageName: node
   linkType: hard
 
@@ -1891,6 +1891,31 @@ __metadata:
   dependencies:
     "@types/hammerjs": ^2.0.36
   checksum: 8945137cec5837edd70af3f2e0ea621543eb0aa3b667e6269ec6485350f4d120c2434b37c7c30b1cf42a65275dd61c1f24626749c616696d3956ac0c008c4766
+  languageName: node
+  linkType: hard
+
+"@emmetio/abbreviation@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "@emmetio/abbreviation@npm:2.2.3"
+  dependencies:
+    "@emmetio/scanner": ^1.0.0
+  checksum: 8637ff0c2afeb7a4498bf628510a8332f3ec70474a445131125d8049dfa1b917c18210829c12e1c9044fec5d13cfb9bb498b0af670e8d4905e6dd88e215bd135
+  languageName: node
+  linkType: hard
+
+"@emmetio/css-abbreviation@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "@emmetio/css-abbreviation@npm:2.1.4"
+  dependencies:
+    "@emmetio/scanner": ^1.0.0
+  checksum: ede72dafc412180ced63046c648bee6e8b7a5511622ed3192f7f11d813e119fd5e71cd60b95ed6a07d2c9809d6567d8c6fb6c36a4e8dbbcca9bd19df92192eba
+  languageName: node
+  linkType: hard
+
+"@emmetio/scanner@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@emmetio/scanner@npm:1.0.0"
+  checksum: 4e4366bf0b56de0a53de361a125dd88b9f652ffea2961a4035fe6acc46670ef483ce86a5e5b66124562a27322099170c3cbfed524b2d07ad048a84e304ab70bd
   languageName: node
   linkType: hard
 
@@ -2377,6 +2402,18 @@ __metadata:
     json5: ^2.2.2
     write-file-atomic: ^2.3.0
   checksum: f04e71654c5b3491bbb7088a02d64acf8e7750369fd48f4d55c64ff4372b5396bdef05a8eff51955e0b098e0069e63281f3c40dc6d3b71aec62295861b1236a6
+  languageName: node
+  linkType: hard
+
+"@expo/match-media@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@expo/match-media@npm:0.4.0"
+  dependencies:
+    css-mediaquery: ^0.1.2
+  peerDependencies:
+    expo: "*"
+    expo-screen-orientation: "*"
+  checksum: c4994ee22d0cb45c77a1353ea40f83fea2a422b2871dbdc2056f8f501a8985a982ab3124cb41c796b3bcf4e0d78cfb185a1968862c1eafab797a5e66230ca84b
   languageName: node
   linkType: hard
 
@@ -3549,7 +3586,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-navigation/native@npm:~6.1.3":
+"@react-navigation/native@npm:^6.1.3, @react-navigation/native@npm:~6.1.3":
   version: 6.1.3
   resolution: "@react-navigation/native@npm:6.1.3"
   dependencies:
@@ -4105,13 +4142,13 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:*, @types/react@npm:^18.0.27":
-  version: 18.0.27
-  resolution: "@types/react@npm:18.0.27"
+  version: 18.0.28
+  resolution: "@types/react@npm:18.0.28"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 600fdbc39a92ea4a77047db3e12f05f67776a710f5918248c0189a59ac2a38900c9db5a5d2e433a16df528a3ecab1aa114b322cacea573bb1ca2fc0b094c52d1
+  checksum: e752df961105e5127652460504785897ca6e77259e0da8f233f694f9e8f451cde7fa0709d4456ade0ff600c8ce909cfe29f9b08b9c247fa9b734e126ec53edd7
   languageName: node
   linkType: hard
 
@@ -6857,9 +6894,9 @@ __metadata:
   linkType: hard
 
 "ci-info@npm:^3.2.0, ci-info@npm:^3.3.0":
-  version: 3.7.1
-  resolution: "ci-info@npm:3.7.1"
-  checksum: 72d93d5101ea1c186511277fbd8d06ae8a6e028cc2fb94361e92bf735b39c5ebd192e8d15a66ff8c4e3ed569f87c2f844e96f90e141b2de5c649f77ec34ff601
+  version: 3.8.0
+  resolution: "ci-info@npm:3.8.0"
+  checksum: d0a4d3160497cae54294974a7246202244fff031b0a6ea20dd57b10ec510aa17399c41a1b0982142c105f3255aff2173e5c0dd7302ee1b2f28ba3debda375098
   languageName: node
   linkType: hard
 
@@ -8089,12 +8126,12 @@ __metadata:
   linkType: hard
 
 "define-properties@npm:^1.1.2, define-properties@npm:^1.1.3, define-properties@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "define-properties@npm:1.1.4"
+  version: 1.2.0
+  resolution: "define-properties@npm:1.2.0"
   dependencies:
     has-property-descriptors: ^1.0.0
     object-keys: ^1.1.1
-  checksum: ce0aef3f9eb193562b5cfb79b2d2c86b6a109dfc9fdcb5f45d680631a1a908c06824ddcdb72b7573b54e26ace07f0a23420aaba0d5c627b34d2c1de8ef527e2b
+  checksum: e60aee6a19b102df4e2b1f301816804e81ab48bb91f00d0d935f269bf4b3f79c88b39e4f89eaa132890d23267335fd1140dfcd8d5ccd61031a0a2c41a54e33a6
   languageName: node
   linkType: hard
 
@@ -8457,12 +8494,14 @@ __metadata:
     "@emotion/babel-plugin": ^11.10.5
     "@emotion/native": ^11.10.0
     "@emotion/react": ^11.10.5
+    "@expo/match-media": ^0.4.0
     "@expo/metro-config": ^0.5.1
     "@expo/vector-icons": ^13.0.0
     "@expo/webpack-config": ^0.17.3
     "@react-native-async-storage/async-storage": ~1.17.3
     "@react-native-masked-view/masked-view": 0.2.8
     "@react-navigation/drawer": ^6.4.4
+    "@react-navigation/native": ^6.1.3
     "@testing-library/jest-native": ^5.3.0
     "@testing-library/react-native": ^11.5.0
     "@types/expo": ^33.0.1
@@ -8476,7 +8515,7 @@ __metadata:
     babel-preset-expo: ~9.2.2
     babel-preset-react-native: 4.0.1
     codecov: ^3.8.3
-    dooboo-ui: ^0.2.0-rc.1
+    dooboo-ui: ^0.2.0-rc.3
     eslint: ^8.28.0
     eslint-plugin-jest: latest
     expo: ~47.0.3
@@ -8486,6 +8525,7 @@ __metadata:
     expo-linking: ~3.3.0
     expo-localization: ~14.0.0
     expo-router: ^1.0.0-rc1
+    expo-screen-orientation: ~5.0.1
     expo-splash-screen: ~0.17.4
     expo-status-bar: ~1.4.2
     expo-web-browser: ~12.0.0
@@ -8506,18 +8546,18 @@ __metadata:
     react-native-svg: 13.4.0
     react-native-vector-icons: ^9.2.0
     react-native-web: ~0.18.7
-    react-responsive: ^9.0.0
     react-test-renderer: ^18.2.0
     sentry-expo: ~6.0.0
     ts-jest: ^29.0.3
     ts-node: ^10.9.1
     typescript: ^4.9.5
+    typescript-styled-plugin: ^0.18.2
   languageName: unknown
   linkType: soft
 
-"dooboo-ui@npm:^0.2.0-rc.1":
-  version: 0.2.0-rc.1
-  resolution: "dooboo-ui@npm:0.2.0-rc.1"
+"dooboo-ui@npm:^0.2.0-rc.3":
+  version: 0.2.0-rc.3
+  resolution: "dooboo-ui@npm:0.2.0-rc.3"
   dependencies:
     "@dooboo-ui/theme": ^0.10.1
     dooboolab-welcome: ^1.3.2
@@ -8530,7 +8570,7 @@ __metadata:
     react-native: ">=0.58"
     react-native-gesture-handler: "*"
     react-native-vector-icons: "*"
-  checksum: 8ac527a1088023adc70752241f7b6e890371b286c6f1d56850a472db0301ae56b9b89acbefd49f50250d48da29a44281b86b1eb6261a2ce25f3b9e17294d5513
+  checksum: 17bcb16b37a17c4e84df4eef5c8fd29ae3ca05171fd6507100e9bbdf62f41c5e8fcd18df2dda469a68f8a05412973b3b7f3d0cdeb65403e4c04630d72f13b0dc
   languageName: node
   linkType: hard
 
@@ -8589,9 +8629,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.564, electron-to-chromium@npm:^1.4.284":
-  version: 1.4.294
-  resolution: "electron-to-chromium@npm:1.4.294"
-  checksum: 5c05219b4af36a496db9c90a0132ea692452a6836619a6c3b3b058d3609fcd416a1b0478ec3e080628352b695419ce7ae4734ce5be399ed7277e00e2f3ab93ea
+  version: 1.4.295
+  resolution: "electron-to-chromium@npm:1.4.295"
+  checksum: 66fff1341d3c94c2ccd1f2a39cffdb92118304f4b949d3194427e7022d6a6bd8c482b5c4afd9dce210117ba20cac01c1a1466089f5a862fe9c563113b86ff829
   languageName: node
   linkType: hard
 
@@ -8614,6 +8654,16 @@ __metadata:
   version: 0.13.1
   resolution: "emittery@npm:0.13.1"
   checksum: 2b089ab6306f38feaabf4f6f02792f9ec85fc054fda79f44f6790e61bbf6bc4e1616afb9b232e0c5ec5289a8a452f79bfa6d905a6fd64e94b49981f0934001c6
+  languageName: node
+  linkType: hard
+
+"emmet@npm:^2.3.0":
+  version: 2.3.6
+  resolution: "emmet@npm:2.3.6"
+  dependencies:
+    "@emmetio/abbreviation": ^2.2.3
+    "@emmetio/css-abbreviation": ^2.1.4
+  checksum: 96d56212d76023b7ecd4fd3b269a6b85b5a38d95d3135557d6321e38955e9c322d75b135435678d7697ed3d56741494ebf3f3974b74f2b89292b65565447ba4b
   languageName: node
   linkType: hard
 
@@ -9086,8 +9136,8 @@ __metadata:
   linkType: hard
 
 "eslint@npm:^8.28.0":
-  version: 8.33.0
-  resolution: "eslint@npm:8.33.0"
+  version: 8.34.0
+  resolution: "eslint@npm:8.34.0"
   dependencies:
     "@eslint/eslintrc": ^1.4.1
     "@humanwhocodes/config-array": ^0.11.8
@@ -9130,7 +9180,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 727e63ab8b7acf281442323c5971f6afdd5b656fbcebc4476cf54e35af51b2f180617433fc5e1952f0449ca3f43a905527f9407ea4b8a7ea7562fc9c3f278d4c
+  checksum: 4e13e9eb05ac2248efbb6acae0b2325091235d5c47ba91a4775c7d6760778cbcd358a773ebd42f4629d2ad89e27c02f5d66eb1f737d75d9f5fc411454f83b2e5
   languageName: node
   linkType: hard
 
@@ -9494,6 +9544,15 @@ __metadata:
     react-native-reanimated:
       optional: true
   checksum: 70ded1eb4d3a2c78b5d347e4bd53713f8299eace357d2514ca3ef003aa6194c17a3df32d2b3347fca548754441b7171b7ac93711a25635ffec63c9133f168ec3
+  languageName: node
+  linkType: hard
+
+"expo-screen-orientation@npm:~5.0.1":
+  version: 5.0.1
+  resolution: "expo-screen-orientation@npm:5.0.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 7ede30533a8c492f82b58c3b8be110b6373ffcc2cbe273299d9f15d9aa943d678d8aaffb3d2565780b45d1d5a2a1ddea54d813fc84c06e30e3cfd59abbd8e30e
   languageName: node
   linkType: hard
 
@@ -12968,6 +13027,13 @@ __metadata:
   bin:
     json5: lib/cli.js
   checksum: 2a7436a93393830bce797d4626275152e37e877b265e94ca69c99e3d20c2b9dab021279146a39cdb700e71b2dd32a4cebd1514cd57cee102b1af906ce5040349
+  languageName: node
+  linkType: hard
+
+"jsonc-parser@npm:^2.3.0":
+  version: 2.3.1
+  resolution: "jsonc-parser@npm:2.3.1"
+  checksum: de37640bd1d0dcc5b2e19f2514b3c2e05832ec6fdb86da65102509524d3eef0f2cc49bd471a0b28b8af2f8069bbca8396a9bd5cad4ae04001e1893e47df265eb
   languageName: node
   linkType: hard
 
@@ -19404,6 +19470,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript-styled-plugin@npm:^0.18.2":
+  version: 0.18.2
+  resolution: "typescript-styled-plugin@npm:0.18.2"
+  dependencies:
+    typescript-template-language-service-decorator: ^2.2.0
+    vscode-css-languageservice: ^5.1.4
+    vscode-emmet-helper: ^2.6.4
+    vscode-languageserver-textdocument: ^1.0.1
+    vscode-languageserver-types: ^3.16.0
+  checksum: a410974ba8c604ae1826962b602f9ed0e7e2f134227e7418a9495c798886859664ed20cd1774978ab017645936d896143091a30980c7b09f06650ca97b344ffe
+  languageName: node
+  linkType: hard
+
+"typescript-template-language-service-decorator@npm:^2.2.0":
+  version: 2.3.1
+  resolution: "typescript-template-language-service-decorator@npm:2.3.1"
+  checksum: 059214299099ecfe1b0372e22430fe262959c700cf65270ce74bbff04f2dc497fe986ade409c53db907805d70fedfbd1989c410f94697bf981082135a2cc6f20
+  languageName: node
+  linkType: hard
+
 "typescript@npm:^4.6.4, typescript@npm:^4.9.5":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
@@ -19894,6 +19980,67 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vscode-css-languageservice@npm:^5.1.4":
+  version: 5.4.2
+  resolution: "vscode-css-languageservice@npm:5.4.2"
+  dependencies:
+    vscode-languageserver-textdocument: ^1.0.4
+    vscode-languageserver-types: ^3.16.0
+    vscode-nls: ^5.0.0
+    vscode-uri: ^3.0.3
+  checksum: faa35690c1f06a469ef335eba85158df453c54e2cacd37788c5e1f29458183753b95b564952acecb3fab31fee3d061a8e70234f2dc49e82244cdc519280fcc1b
+  languageName: node
+  linkType: hard
+
+"vscode-emmet-helper@npm:^2.6.4":
+  version: 2.6.4
+  resolution: "vscode-emmet-helper@npm:2.6.4"
+  dependencies:
+    emmet: ^2.3.0
+    jsonc-parser: ^2.3.0
+    vscode-languageserver-textdocument: ^1.0.1
+    vscode-languageserver-types: ^3.15.1
+    vscode-nls: ^5.0.0
+    vscode-uri: ^2.1.2
+  checksum: ccee14eadae599fa619f714865ef47b6fbabfe684eabeee00311ac078bbf340cd07c0481af4028e2565412be2fb272dbabd268174a8c835243f699cdd6b5c09e
+  languageName: node
+  linkType: hard
+
+"vscode-languageserver-textdocument@npm:^1.0.1, vscode-languageserver-textdocument@npm:^1.0.4":
+  version: 1.0.9
+  resolution: "vscode-languageserver-textdocument@npm:1.0.9"
+  checksum: 36b76f725098d3e0d97885c05c51fca47388d9b62e936f6c8824c44a4fac7a96e1406538538a0f46ef1fdb9f1053ddc1cacb5e7b168cecb36d3c018942ec6f52
+  languageName: node
+  linkType: hard
+
+"vscode-languageserver-types@npm:^3.15.1, vscode-languageserver-types@npm:^3.16.0":
+  version: 3.17.2
+  resolution: "vscode-languageserver-types@npm:3.17.2"
+  checksum: ef2d862d22f622b64de0f428773d50a5928ec6cdd485960a7564ebe4fd4a3c8bcd956f29eb15bc45a0f353846e62f39f6c764d2ab85ce774b8724411ba84342f
+  languageName: node
+  linkType: hard
+
+"vscode-nls@npm:^5.0.0":
+  version: 5.2.0
+  resolution: "vscode-nls@npm:5.2.0"
+  checksum: c9f43c0f85000b3008fc4a3a8fc122e580f4f0402a77186c6c0f3219ca8ac258f4893c7a563d66f097a6da09951d7f5a7e6295d3e21dcbaec707937c9089b5a8
+  languageName: node
+  linkType: hard
+
+"vscode-uri@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "vscode-uri@npm:2.1.2"
+  checksum: 58c2d21018b86825b5a7f65f8879f837828a367bbf31d07ed59268fb2b56c9621a6996547d5e8f966d6ac05f0f921a7005f4541927007f788c2e4c6e5d6735e0
+  languageName: node
+  linkType: hard
+
+"vscode-uri@npm:^3.0.3":
+  version: 3.0.7
+  resolution: "vscode-uri@npm:3.0.7"
+  checksum: c899a0334f9f6ba53021328e083f6307978c09b94407d7e5fe86fcd8fcb8f1da0cb344123a335e55769055007a46d51aff83f9ee1dfc0296ee54b78f34ef0e4f
+  languageName: node
+  linkType: hard
+
 "walker@npm:^1.0.7, walker@npm:^1.0.8, walker@npm:~1.0.5":
   version: 1.0.8
   resolution: "walker@npm:1.0.8"
@@ -20208,9 +20355,9 @@ __metadata:
   linkType: hard
 
 "wonka@npm:^6.1.2":
-  version: 6.1.2
-  resolution: "wonka@npm:6.1.2"
-  checksum: 474dcffd3861faaf5df8f4ef1ea1e614eb0cf36f54003974ebd4ab43b8fd6aad26317ef75e55488e7a61d64922531ae3ca2890dac90922d46715e0dd795682ce
+  version: 6.2.3
+  resolution: "wonka@npm:6.2.3"
+  checksum: 3cbe0048ba461068ec6e7ef875952d3ad148ae671c070f50f9fddafd01c6e23fa83fe638cbc22688db2bcff9c1c75e1f8c7cd178e00644f31dbd8acdc8d76ba1
   languageName: node
   linkType: hard
 

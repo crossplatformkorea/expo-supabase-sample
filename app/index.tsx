@@ -4,31 +4,29 @@ import type {ReactElement} from 'react';
 import {useState} from 'react';
 
 import {IC_MASK} from '../src/utils/Icons';
-import IntroView from '../src/uis/IntroTemp';
 import {getString} from '../STRINGS';
 import styled from '@emotion/native';
 import {useRouter} from 'expo-router';
 import {useAppContext} from '../src/providers/AppProvider';
 import type {User} from '../src/types';
+import {Heading1} from '../src/uis/Typography';
 
 const Container = styled.View`
   flex: 1;
   align-self: stretch;
-  overflow: scroll;
-  background-color: ${({theme}) => theme.bg.basic};
+  margin-bottom: 35px;
 
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  overflow: hidden;
+  justify-content: space-between;
 `;
 
+const ContentWrapper = styled.View``;
+
 const ButtonWrapper = styled.View`
-  position: absolute;
-  flex-direction: column;
-  bottom: 40px;
   width: 72%;
-  align-self: center;
+
+  flex-direction: column;
 `;
 
 type Props = {};
@@ -36,7 +34,10 @@ type Props = {};
 function Intro({}: Props): ReactElement {
   let timer: any;
 
-  const {setUser} = useAppContext();
+  const {
+    setUser,
+    state: {user},
+  } = useAppContext();
   const router = useRouter();
   const {changeThemeType} = useDooboo();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -59,7 +60,17 @@ function Intro({}: Props): ReactElement {
 
   return (
     <Container>
-      <IntroView />
+      <ContentWrapper>
+        <Heading1
+          style={{
+            marginTop: 100,
+          }}
+        >
+          {user ? user.displayName : ''}
+        </Heading1>
+        <Heading1>{user ? user.age : ''}</Heading1>
+        <Heading1>{user ? user.job : ''}</Heading1>
+      </ContentWrapper>
       <ButtonWrapper>
         <Button
           testID="btn-login"

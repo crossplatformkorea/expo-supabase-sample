@@ -1,34 +1,28 @@
 import styled, {css} from '@emotion/native';
 
 export const Heading1 = styled.Text`
-  font-size: 26px;
-  text-align: center;
+  font-size: 18px;
   color: ${({theme}) => theme.text.basic};
-  font-family: futura;
-  font-weight: 700;
 
   ${({theme: {isDesktop}}) =>
     isDesktop &&
     css`
-      font-size: 40px;
+      font-size: 20px;
     `}
 `;
 
 export const Body1 = styled.Text`
-  font-size: 20px;
-  text-align: center;
+  font-size: 14px;
   color: ${({theme}) => theme.text.basic};
-  font-family: avenir;
-  font-weight: 800;
 
   ${({theme: {isDesktop}}) =>
     isDesktop &&
     css`
-      font-size: 28px;
+      font-size: 18px;
     `}
 `;
 
 export const Body3 = styled.Text`
-  font-size: 14px;
+  font-size: 12px;
   color: ${({theme}) => theme.text.basic};
 `;

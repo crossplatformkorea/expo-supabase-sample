@@ -1,4 +1,5 @@
 import type {Config} from '@jest/types';
+//@ts-ignore
 import expoPreset from 'jest-expo/jest-preset';
 
 process.env.TZ = 'Asia/Seoul';
