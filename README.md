@@ -1,7 +1,3 @@
-### ANNOUNCEMENT
-
-DO NOT MODIFY OR CHANGE THE CODE BEFORE CONFIRMED BY `DOOBOOLAB`. THIS REPOSITORY IS USED IN `DOOBOO-CLI`.
-
 # Expo typescript starter with expo router
 
 [![CI](https://github.com/dooboolab/dooboo-expo-router/actions/workflows/ci.yml/badge.svg)](https://github.com/dooboolab/dooboo-expo-router/actions/workflows/ci.yml)
@@ -50,6 +46,8 @@ app/
 ├─ assets
 │  └─ icons // app icons
 │  └─ images // app images like background images
+├─ app/
+├─ assets/
 ├─ node_modules/
 ├─ src/
 │  └─ apis
@@ -98,35 +96,31 @@ npm test
 > Result
 
 ```
-> jest -u
+> yarn test
 
- PASS  src/components/shared/__tests__/Button.test.tsx
- PASS  src/components/screen/__tests__/Intro.test.tsx
- › 2 snapshots written.
+PASS  test/app/index.test.tsx (6.378 s)
+PASS  test/src/uis/Button.test.tsx
+PASS  test/app/temp.test.tsx
+PASS  src/apis/__tests__/sample.test.ts
 
-Snapshot Summary
- › 2 snapshots written in 1 test suite.
-
-Test Suites: 2 passed, 2 total
-Tests:       5 passed, 5 total
-Snapshots:   2 added, 4 passed, 6 total
-Time:        3.055s, estimated 6s
-Ran all test suites
+Test Suites: 4 passed, 4 total
+Tests:       18 passed, 18 total
 ```
 
 ### Writing tests with Jest
 
-We've created test examples with jest-ts in `src/components/screen/__tests__` and `src/components/shared/__tests__`. Since react is component oriented, we've designed to focus on writing test in same level of directory with component. You can simply run `npm test` to test if it succeeds and look more closer opening the source.
+We've created test examples with jest-ts in `test` dir. We organize the tests as organized in [flutter repo](https://github.com/flutter/flutter/tree/master/packages/flutter/test). This way we know where the test files exist.
 
 ### Localization
 
-We've defined Localization strings in `STRINGS.js` which is in root dir.
-We used [react-native-localization](https://github.com/stefalda/ReactNativeLocalization) pacakage for this one.
+We've defined Localization strings in `STRINGS.ts` which is in root dir.
+We used [expo-localization](https://docs.expo.dev/versions/latest/sdk/localization) for translation.
 
-```
+```ts
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 
+// import en from './assets/langs/en.json';
 const en = {
   HELLO: 'Hello',
   LOGIN: 'Login',
@@ -138,6 +132,7 @@ const en = {
   CHANGE_THEME: 'Change theme',
 };
 
+// import ko from './assets/langs/ko.json';
 const ko = {
   HELLO: '안녕하세요',
   LOGIN: '로그인',
@@ -160,53 +155,3 @@ export const getString = (param: string, mapObj?: object) => {
   return i18n.t(param);
 };
 ```
-
-Fixed jest setup by adding following in jestSetup.
-
-```
-import { NativeModules } from 'react-native';
-
-/**
- * monkey patching the locale to avoid the error:
- * Something went wrong initializing the native ReactLocalization module
- * https://gist.github.com/MoOx/08b465c3eac9e36e683929532472d1e0
- */
-
-NativeModules.ReactLocalization = {
-  language: 'en_US',
-};
-```
-
-# Vscode prettier and eslint setup
-
-```
-"eslint.enable": true,
-"eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-],
-// prettier extension setting
-"editor.formatOnSave": true,
-"[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-},
-"[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-},
-"[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-},
-"[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-},
-"prettier.singleQuote": true,
-"prettier.trailingComma": "all",
-"prettier.arrowParens": "always",
-"prettier.jsxSingleQuote": true
-```
-
-### Expo
-
-version: 47
