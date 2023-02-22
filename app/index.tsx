@@ -1,15 +1,24 @@
-import {Button, useDooboo} from 'dooboo-ui';
-import {Image, View} from 'react-native';
-import type {ReactElement} from 'react';
+import {Button} from 'dooboo-ui';
+import {
+  Alert,
+  FlatList,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {ReactElement, useEffect, useRef} from 'react';
 import {useState} from 'react';
 
-import {IC_MASK} from '../src/utils/Icons';
-import {getString} from '../STRINGS';
 import styled from '@emotion/native';
-import {useRouter} from 'expo-router';
-import {useAppContext} from '../src/providers/AppProvider';
-import type {User} from '../src/types';
 import {Heading1} from '../src/uis/Typography';
+import {Database, supabase} from '../src/supabase';
+import {User} from '@supabase/supabase-js';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import {Input} from 'react-native-elements';
+import * as ImagePicker from 'expo-image-picker';
+import {decode} from 'base64-arraybuffer';
 
 const Container = styled.View`
   flex: 1;
@@ -23,86 +32,310 @@ const Container = styled.View`
 
 const ContentWrapper = styled.View``;
 
-const ButtonWrapper = styled.View`
-  width: 72%;
-
-  flex-direction: column;
-`;
-
 type Props = {};
+type DataType = Database['public']['Tables']['review']['Row'];
 
 function Intro({}: Props): ReactElement {
-  let timer: any;
+  const [userState, setUserState] = useState<User | null>(null);
+  const [dataList, setDataList] = useState<DataType[]>([]);
+  const refRBSheet = useRef<RBSheet>(null);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [updateId, setUpdateId] = useState(0);
 
-  const {
-    setUser,
-    state: {user},
-  } = useAppContext();
-  const router = useRouter();
-  const {changeThemeType} = useDooboo();
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<
+    ImagePicker.ImagePickerAsset[] | null
+  >(null);
+  const [status, requestPermission] = ImagePicker.useCameraPermissions();
 
-  const onLogin = (): void => {
-    setIsLoggingIn(true);
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: {user},
+      } = await supabase.auth.getUser();
+      setUserState(user);
+    };
 
-    timer = setTimeout(() => {
-      const tempUser: User = {
-        displayName: 'dooboolab',
-        age: 30,
-        job: 'developer',
-      };
+    const getData = async () => {
+      const {data, error} = await supabase.from('review').select('*');
+      if (error) {
+        Alert.alert('Error', error.message);
+        return;
+      }
+      setDataList(data as DataType[]);
+    };
 
-      setUser(tempUser);
-      setIsLoggingIn(false);
-      clearTimeout(timer);
-    }, 1000);
+    getUser();
+    getData();
+  }, []);
+
+  const createData = async () => {
+    const {data, error} = await supabase
+      .from('review')
+      .insert({
+        title,
+        content,
+      })
+      .select('*');
+    if (error) {
+      Alert.alert('Error', error.message);
+      return;
+    }
+    setDataList((prev) => [...prev, ...data]);
+    refRBSheet.current?.close();
+    setTitle('');
+    setContent('');
+  };
+
+  const updateData = async (id: number) => {
+    const {data, error} = await supabase
+      .from('review')
+      .update({title, content})
+      .eq('id', id)
+      .select('*');
+    if (error) {
+      Alert.alert('Error', error.message);
+      return;
+    }
+    setDataList((prev) =>
+      prev.map((item) => (item.id === id ? data[0] : item)),
+    );
+    refRBSheet.current?.close();
+    setTitle('');
+    setContent('');
+  };
+
+  const deleteData = async (id: number) => {
+    const {error} = await supabase.from('review').delete().eq('id', id);
+    if (error) {
+      Alert.alert('Error', error.message);
+      return;
+    }
+    setDataList((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const uploadAvatar = async (id: number, index: number) => {
+    if (!status?.granted) {
+      requestPermission();
+      return;
+    }
+
+    try {
+      setUploading(true);
+
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        base64: true,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        const {error: uploadError} = await supabase
+          .from('review')
+          .update({imageUrl: result.assets ? result.assets[0].uri : ''})
+          .eq('id', id);
+        if (uploadError) {
+          Alert.alert('Error', uploadError.message);
+          return;
+        }
+        setDataList(
+          dataList.map((item, i) => {
+            if (index === i) {
+              return {
+                ...item,
+                imageUrl: result.assets ? result.assets[0].uri : '',
+              };
+            }
+            return item;
+          }),
+        );
+
+        const photo = {
+          uri: result.assets[0].uri,
+          type: result.assets[0].type,
+          name: result.assets[0].fileName,
+        };
+        const formData = new FormData();
+        //@ts-ignore
+        formData.append('file', photo);
+        const fileExt = result.assets[0].fileName?.split('.').pop();
+        const filePath = `profile/random.jpg`;
+
+        let {error} = await supabase.storage
+          .from('avatars')
+          .upload(filePath, decode(result.assets[0].base64 ?? ''), {
+            contentType: result.assets[0].type,
+          });
+        if (error) {
+          throw error;
+        }
+      }
+    } catch (error) {
+      console.log(error, 'error');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const deleteAvatar = async () => {
+    try {
+      const {data, error} = await supabase.storage
+        .from('avatars')
+        .remove(['0.009832265928901962.undefined']);
+
+      if (error) {
+        Alert.alert('Error', error.message);
+        return;
+      }
+      console.log(error, 'error');
+      console.log(data, 'data');
+    } catch (e) {
+      console.log(e, 'e');
+    }
   };
 
   return (
-    <Container>
-      <ContentWrapper>
-        <Heading1
-          style={{
-            marginTop: 100,
-          }}
-        >
-          {user ? user.displayName : ''}
-        </Heading1>
-        <Heading1>{user ? user.age : ''}</Heading1>
-        <Heading1>{user ? user.job : ''}</Heading1>
-      </ContentWrapper>
-      <ButtonWrapper>
-        <Button
-          testID="btn-login"
-          startElement={
-            <Image
-              source={IC_MASK}
-              style={{
-                position: 'absolute',
-                left: 12,
-                width: 24,
-                height: 24,
+    <>
+      <Container>
+        <ContentWrapper>
+          <Heading1 style={{marginTop: 10}}>{userState?.email}</Heading1>
+        </ContentWrapper>
+        <FlatList
+          style={{width: '100%'}}
+          data={dataList}
+          renderItem={({item, index}) => (
+            <Pressable
+              onPress={() => {
+                setTitle(item.title);
+                setContent(item.content);
+                setIsUpdate(true);
+                setUpdateId(item.id);
+                refRBSheet.current?.open();
               }}
-            />
-          }
-          loading={isLoggingIn}
-          onPress={() => onLogin()}
-          text={getString('LOGIN')}
+              style={{
+                borderBottomWidth: 1,
+                marginTop: 10,
+                paddingHorizontal: 20,
+                paddingVertical: 20,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View>
+                  <Text>title: {item.title}</Text>
+                  <Text>content: {item.content}</Text>
+                </View>
+                <View style={{alignItems: 'center'}}>
+                  <TouchableOpacity
+                    onPress={() => uploadAvatar(item.id, index)}
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderWidth: 1,
+                      borderRadius: 60,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {item.imageUrl ? (
+                      <Image
+                        source={{uri: item.imageUrl}}
+                        style={{width: 60, height: 60, borderRadius: 60}}
+                      />
+                    ) : (
+                      <Text style={{textAlign: 'center'}}>no image</Text>
+                    )}
+                  </TouchableOpacity>
+                  {item.imageUrl ? (
+                    <TouchableOpacity
+                      onPress={deleteAvatar}
+                      style={{
+                        padding: 5,
+                        borderRadius: 2,
+                        backgroundColor: 'black',
+                        marginTop: 5,
+                      }}
+                    >
+                      <Text style={{color: 'white'}}>delete</Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
+              </View>
+
+              <Button
+                style={{marginHorizontal: 20, marginTop: 20}}
+                text={'delete'}
+                onPress={() => deleteData(item.id)}
+              />
+            </Pressable>
+          )}
         />
-        <View style={{marginTop: 12}} />
-        <Button
-          testID="btn-navigate"
-          onPress={() => router.push('/temp')}
-          text={getString('NAVIGATE', {name: 'Temp'})}
-        />
-        <View style={{marginTop: 12}} />
-        <Button
-          testID="btn-theme"
-          onPress={(): void => changeThemeType()}
-          text={getString('CHANGE_THEME')}
-        />
-      </ButtonWrapper>
-    </Container>
+        <View style={{paddingHorizontal: 20, width: '100%', marginTop: 20}}>
+          <Button
+            style={{marginBottom: 20}}
+            text="Create Data"
+            onPress={() => {
+              setIsUpdate(false);
+              refRBSheet.current?.open();
+            }}
+          />
+          <Button text="Sign out" onPress={() => supabase.auth.signOut()} />
+        </View>
+      </Container>
+      {/* @ts-ignore */}
+      <RBSheet
+        ref={refRBSheet}
+        onOpen={() => {}}
+        onClose={() => {
+          setTitle('');
+          setContent('');
+        }}
+        closeOnDragDown
+        dragFromTopOnly
+        height={400}
+        animationType="fade"
+        openDuration={250}
+        customStyles={{
+          container: {
+            borderTopRightRadius: 30,
+            borderTopLeftRadius: 30,
+            paddingHorizontal: 20,
+            paddingBottom: 40,
+          },
+        }}
+      >
+        <View style={{justifyContent: 'center', flex: 1}}>
+          <Input
+            label="Title"
+            onChangeText={(text) => setTitle(text)}
+            value={title}
+            placeholder="title"
+            autoCapitalize={'none'}
+          />
+          <Input
+            label="Content"
+            onChangeText={(text) => setContent(text)}
+            value={content}
+            placeholder="content"
+            autoCapitalize={'none'}
+          />
+          <Button
+            style={{marginTop: 20}}
+            text={isUpdate ? 'Update Data' : 'Create Data'}
+            onPress={isUpdate ? () => updateData(updateId) : createData}
+          />
+        </View>
+      </RBSheet>
+    </>
   );
 }
 

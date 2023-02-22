@@ -1,4 +1,20 @@
-# Expo typescript starter with expo router
+---
+marp: true
+---
+# Expo supabase example with expo router
+
+
+## Create Data
+```
+
+```
+
+## Fetch Data
+
+## Update Data
+
+## Delete Data
+<!-- # Expo typescript starter with expo router
 
 [![CI](https://github.com/dooboolab/dooboo-expo-router/actions/workflows/ci.yml/badge.svg)](https://github.com/dooboolab/dooboo-expo-router/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/dooboolab/dooboo-expo-router/branch/main/graph/badge.svg)](https://codecov.io/gh/dooboolab/dooboo-expo-router)
@@ -154,4 +170,4 @@ export const getString = (param: string, mapObj?: object) => {
   }
   return i18n.t(param);
 };
-```
+``` -->

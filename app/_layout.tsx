@@ -19,6 +19,9 @@ import StatusBarBrightness from 'dooboo-ui/uis/StatusbarBrightness';
 import type {StyleProp, ViewStyle} from 'react-native';
 import {Platform} from 'react-native';
 import {useDooboo} from 'dooboo-ui';
+import {supabase} from '../src/supabase';
+import {Session, User} from '@supabase/supabase-js';
+import SignIn from './signIn';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -50,6 +53,7 @@ function App(): React.ReactElement | null {
 
   const onIos = Platform.OS === 'ios';
   const onMobile = Platform.OS === 'android' || Platform.OS === 'ios';
+  const [session, setSession] = useState<Session | null>(null);
 
   const {
     media: {isPortrait},
@@ -98,24 +102,38 @@ function App(): React.ReactElement | null {
     }
   }, [appIsReady]);
 
+  useEffect(() => {
+    supabase.auth.getSession().then(({data: {session}}) => {
+      setSession(session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
+
   if (!appIsReady) {
     return null;
   }
 
   return (
     <SafeAreaProvider>
-      <Navigator router={TabRouter} initialRouteName="/">
-        <StatusBarBrightness />
-        <Container onLayout={onLayoutRootView} style={safeAreaStyles}>
-          <NavigatorWrapper>
-            <RootNavigator />
-          </NavigatorWrapper>
-          <Contents>
-            <Header />
-            <Slot />
-          </Contents>
-        </Container>
-      </Navigator>
+      {session?.user ? (
+        <Navigator router={TabRouter} initialRouteName="/">
+          <StatusBarBrightness />
+          <Container onLayout={onLayoutRootView} style={safeAreaStyles}>
+            <NavigatorWrapper>
+              <RootNavigator />
+            </NavigatorWrapper>
+            <Contents>
+              <Header />
+              <Slot />
+            </Contents>
+          </Container>
+        </Navigator>
+      ) : (
+        <SignIn />
+      )}
     </SafeAreaProvider>
   );
 }
