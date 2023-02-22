@@ -1,0 +1,26 @@
+.DS_Store
+dist/
+node_modules/**/*
+.expo/*
+npm-debug.*
+*.jks
+*.p12
+*.key
+*.mobileprovision
+.jest
+coverage/
+*.orig.*
+web-build/
+web-report/
+
+package-lock.json
+yarn-error*
+
+# yarn2
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
