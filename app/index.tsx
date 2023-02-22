@@ -45,9 +45,6 @@ function Intro({}: Props): ReactElement {
   const [updateId, setUpdateId] = useState(0);
 
   const [uploading, setUploading] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState<
-    ImagePicker.ImagePickerAsset[] | null
-  >(null);
   const [status, requestPermission] = ImagePicker.useCameraPermissions();
 
   useEffect(() => {
@@ -115,7 +112,6 @@ function Intro({}: Props): ReactElement {
     }
     setDataList((prev) => prev.filter((item) => item.id !== id));
   };
-
   const uploadAvatar = async (id: number, index: number) => {
     if (!status?.granted) {
       requestPermission();
@@ -134,9 +130,16 @@ function Intro({}: Props): ReactElement {
       });
 
       if (!result.canceled) {
+        const filePath = `profile/${Math.random()}.jpg`;
+
         const {error: uploadError} = await supabase
           .from('review')
-          .update({imageUrl: result.assets ? result.assets[0].uri : ''})
+          .update({
+            image: {
+              url: result.assets ? result.assets[0].uri : '',
+              path: filePath,
+            },
+          })
           .eq('id', id);
         if (uploadError) {
           Alert.alert('Error', uploadError.message);
@@ -147,7 +150,10 @@ function Intro({}: Props): ReactElement {
             if (index === i) {
               return {
                 ...item,
-                imageUrl: result.assets ? result.assets[0].uri : '',
+                image: {
+                  url: result.assets ? result.assets[0].uri : '',
+                  path: filePath,
+                },
               };
             }
             return item;
@@ -162,8 +168,7 @@ function Intro({}: Props): ReactElement {
         const formData = new FormData();
         //@ts-ignore
         formData.append('file', photo);
-        const fileExt = result.assets[0].fileName?.split('.').pop();
-        const filePath = `profile/random.jpg`;
+        // const fileExt = result.assets[0].fileName?.split('.').pop();
 
         let {error} = await supabase.storage
           .from('avatars')
@@ -181,18 +186,39 @@ function Intro({}: Props): ReactElement {
     }
   };
 
-  const deleteAvatar = async () => {
+  const deleteAvatar = async (path: string, id: number, index: number) => {
     try {
-      const {data, error} = await supabase.storage
-        .from('avatars')
-        .remove(['0.009832265928901962.undefined']);
+      const {error} = await supabase.storage.from('avatars').remove([path]);
+      await supabase
+        .from('review')
+        .update({
+          image: {
+            url: '',
+            path: '',
+          },
+        })
+        .eq('id', id)
+        .select('*');
 
       if (error) {
         Alert.alert('Error', error.message);
         return;
       }
-      console.log(error, 'error');
-      console.log(data, 'data');
+
+      setDataList(
+        dataList.map((item, i) => {
+          if (index === i) {
+            return {
+              ...item,
+              image: {
+                url: '',
+                path: '',
+              },
+            };
+          }
+          return item;
+        }),
+      );
     } catch (e) {
       console.log(e, 'e');
     }
@@ -246,18 +272,20 @@ function Intro({}: Props): ReactElement {
                       alignItems: 'center',
                     }}
                   >
-                    {item.imageUrl ? (
+                    {item.image?.url ? (
                       <Image
-                        source={{uri: item.imageUrl}}
+                        source={{uri: item.image?.url}}
                         style={{width: 60, height: 60, borderRadius: 60}}
                       />
                     ) : (
                       <Text style={{textAlign: 'center'}}>no image</Text>
                     )}
                   </TouchableOpacity>
-                  {item.imageUrl ? (
+                  {item.image?.path ? (
                     <TouchableOpacity
-                      onPress={deleteAvatar}
+                      onPress={() =>
+                        deleteAvatar(item.image?.path!, item.id, index)
+                      }
                       style={{
                         padding: 5,
                         borderRadius: 2,

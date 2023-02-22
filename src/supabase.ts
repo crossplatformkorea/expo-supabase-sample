@@ -15,17 +15,26 @@ export interface Database {
             created_at: string;
             content:string;
             title:string;
-            imageUrl?:string;
+            image?:{
+              url:string;
+              path:string;
+            }
           } // The data expected to be returned from a "select" statement.
           Insert: {
             content:string;
             title:string;
-            imageUrl?:string;
+            image?:{
+              url:string;
+              path:string;
+            }
           } // The data expected passed to an "insert" statement.
           Update: {
             content:string;
             title:string;
-            imageUrl?:string;
+            image?:{
+              url:string;
+              path:string;
+            }
           } // The data expected passed to an "update" statement.
         },
         countries:{

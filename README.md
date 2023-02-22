@@ -1,6 +1,3 @@
----
-marp: true
----
 # Expo supabase example with expo router
 
 
