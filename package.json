@@ -13,7 +13,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "jest --runInBand",
+    "test": "jest --verbose",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx"
   },
   "private": true,

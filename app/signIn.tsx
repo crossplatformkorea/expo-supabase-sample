@@ -1,14 +1,36 @@
 import {StyleSheet, View, Alert, Text} from 'react-native';
+import type {ReactElement} from 'react';
 import {useState} from 'react';
 import {Button, Input} from 'react-native-elements';
 import {supabase} from '../src/supabase';
 
-const SignIn = () => {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 28,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  verticallySpaced: {
+    paddingTop: 4,
+    paddingBottom: 4,
+    alignSelf: 'stretch',
+  },
+  mt20: {
+    marginTop: 20,
+  },
+});
+
+const SignIn = (): ReactElement => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const signInWithEmail = async () => {
+  const signInWithEmail = async (): Promise<void> => {
     setLoading(true);
 
     const {error} = await supabase.auth.signInWithPassword({
@@ -18,11 +40,14 @@ const SignIn = () => {
 
     setEmail('');
     setPassword('');
-    if (error) Alert.alert(error.message);
+    if (error) {
+      Alert.alert(error.message);
+    }
+
     setLoading(false);
   };
 
-  const signUpWithEmail = async () => {
+  const signUpWithEmail = async (): Promise<void> => {
     setLoading(true);
 
     const {error} = await supabase.auth.signUp({
@@ -30,7 +55,10 @@ const SignIn = () => {
       password,
     });
 
-    if (error) Alert.alert(error.message);
+    if (error) {
+      Alert.alert(error.message);
+    }
+
     setLoading(false);
   };
 
@@ -77,24 +105,3 @@ const SignIn = () => {
 };
 
 export default SignIn;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 28,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: 'stretch',
-  },
-  mt20: {
-    marginTop: 20,
-  },
-});

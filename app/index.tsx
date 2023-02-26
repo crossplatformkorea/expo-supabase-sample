@@ -1,6 +1,7 @@
 import {Button} from 'dooboo-ui';
 import {
   Alert,
+  Dimensions,
   FlatList,
   Image,
   Pressable,
@@ -8,13 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ReactElement, useEffect, useRef} from 'react';
-import {useState} from 'react';
+import type {ReactElement} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import styled from '@emotion/native';
 import {Heading1} from '../src/uis/Typography';
-import {Database, supabase} from '../src/supabase';
-import {User} from '@supabase/supabase-js';
+import type {Database} from '../src/supabase';
+import {supabase} from '../src/supabase';
+import type {User} from '@supabase/supabase-js';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {Input} from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
@@ -33,7 +35,8 @@ const Container = styled.View`
 const ContentWrapper = styled.View``;
 
 type Props = {};
-type DataType = Database['public']['Tables']['review']['Row'];
+
+export type DataType = Database['public']['Tables']['review']['Row'];
 
 function Intro({}: Props): ReactElement {
   const [userState, setUserState] = useState<User | null>(null);
@@ -48,19 +51,21 @@ function Intro({}: Props): ReactElement {
   const [status, requestPermission] = ImagePicker.useCameraPermissions();
 
   useEffect(() => {
-    const getUser = async () => {
+    const getUser = async (): Promise<void> => {
       const {
         data: {user},
       } = await supabase.auth.getUser();
       setUserState(user);
     };
 
-    const getData = async () => {
+    const getData = async (): Promise<void> => {
       const {data, error} = await supabase.from('review').select('*');
       if (error) {
         Alert.alert('Error', error.message);
+
         return;
       }
+
       setDataList(data as DataType[]);
     };
 
@@ -68,7 +73,7 @@ function Intro({}: Props): ReactElement {
     getData();
   }, []);
 
-  const createData = async () => {
+  const createData = async (): Promise<void> => {
     const {data, error} = await supabase
       .from('review')
       .insert({
@@ -76,26 +81,32 @@ function Intro({}: Props): ReactElement {
         content,
       })
       .select('*');
+
     if (error) {
       Alert.alert('Error', error.message);
+
       return;
     }
+
     setDataList((prev) => [...prev, ...data]);
     refRBSheet.current?.close();
     setTitle('');
     setContent('');
   };
 
-  const updateData = async (id: number) => {
+  const updateData = async (id: number): Promise<void> => {
     const {data, error} = await supabase
       .from('review')
       .update({title, content})
       .eq('id', id)
       .select('*');
+
     if (error) {
       Alert.alert('Error', error.message);
+
       return;
     }
+
     setDataList((prev) =>
       prev.map((item) => (item.id === id ? data[0] : item)),
     );
@@ -104,17 +115,21 @@ function Intro({}: Props): ReactElement {
     setContent('');
   };
 
-  const deleteData = async (id: number) => {
+  const deleteData = async (id: number): Promise<void> => {
     const {error} = await supabase.from('review').delete().eq('id', id);
     if (error) {
       Alert.alert('Error', error.message);
+
       return;
     }
+
     setDataList((prev) => prev.filter((item) => item.id !== id));
   };
-  const uploadAvatar = async (id: number, index: number) => {
+
+  const uploadAvatar = async (id: number, index: number): Promise<void> => {
     if (!status?.granted) {
       requestPermission();
+
       return;
     }
 
@@ -141,10 +156,13 @@ function Intro({}: Props): ReactElement {
             },
           })
           .eq('id', id);
+
         if (uploadError) {
           Alert.alert('Error', uploadError.message);
+
           return;
         }
+
         setDataList(
           dataList.map((item, i) => {
             if (index === i) {
@@ -156,6 +174,7 @@ function Intro({}: Props): ReactElement {
                 },
               };
             }
+
             return item;
           }),
         );
@@ -175,6 +194,7 @@ function Intro({}: Props): ReactElement {
           .upload(filePath, decode(result.assets[0].base64 ?? ''), {
             contentType: result.assets[0].type,
           });
+
         if (error) {
           throw error;
         }
@@ -186,7 +206,11 @@ function Intro({}: Props): ReactElement {
     }
   };
 
-  const deleteAvatar = async (path: string, id: number, index: number) => {
+  const deleteAvatar = async (
+    path: string,
+    id: number,
+    index: number,
+  ): Promise<void> => {
     try {
       const {error} = await supabase.storage.from('avatars').remove([path]);
       await supabase
@@ -202,6 +226,7 @@ function Intro({}: Props): ReactElement {
 
       if (error) {
         Alert.alert('Error', error.message);
+
         return;
       }
 
@@ -216,6 +241,7 @@ function Intro({}: Props): ReactElement {
               },
             };
           }
+
           return item;
         }),
       );
@@ -256,11 +282,15 @@ function Intro({}: Props): ReactElement {
                   justifyContent: 'space-between',
                 }}
               >
-                <View>
+                <View
+                  style={{
+                    width: Dimensions.get('window').width - 120,
+                  }}
+                >
                   <Text>title: {item.title}</Text>
                   <Text>content: {item.content}</Text>
                 </View>
-                <View style={{alignItems: 'center'}}>
+                <View style={{alignItems: 'center', marginLeft: 20}}>
                   <TouchableOpacity
                     onPress={() => uploadAvatar(item.id, index)}
                     style={{
@@ -309,6 +339,7 @@ function Intro({}: Props): ReactElement {
         />
         <View style={{paddingHorizontal: 20, width: '100%', marginTop: 20}}>
           <Button
+            testID="open-bottom-sheet"
             style={{marginBottom: 20}}
             text="Create Data"
             onPress={() => {
@@ -319,8 +350,10 @@ function Intro({}: Props): ReactElement {
           <Button text="Sign out" onPress={() => supabase.auth.signOut()} />
         </View>
       </Container>
+
       {/* @ts-ignore */}
       <RBSheet
+        testID="bottom-sheet"
         ref={refRBSheet}
         onOpen={() => {}}
         onClose={() => {
@@ -357,6 +390,7 @@ function Intro({}: Props): ReactElement {
             autoCapitalize={'none'}
           />
           <Button
+            testID="CREATE_DATA"
             style={{marginTop: 20}}
             text={isUpdate ? 'Update Data' : 'Create Data'}
             onPress={isUpdate ? () => updateData(updateId) : createData}
