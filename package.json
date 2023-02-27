@@ -82,7 +82,6 @@
     "@types/jest": "^29.4.0",
     "@types/react": "^18.0.27",
     "@types/react-test-renderer": "^18.0.0",
-    "@types/relay-test-utils": "^14.1.0",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "babel-preset-expo": "~9.2.2",
     "babel-preset-react-native": "4.0.1",

@@ -1,10 +1,13 @@
 {
   "HELLO": "Hello",
   "LOGIN": "Login",
+  "LOGOUT": "LogOut",
   "EMAIL": "Email",
   "PASSWORD": "Password",
   "SIGNUP": "SIGN UP",
   "FORGOT_PW": "Forgot password?",
   "NAVIGATE": "Navigate to %{name}",
-  "CHANGE_THEME": "Change theme"
+  "CHANGE_THEME": "Change theme",
+  "TITLE": "Welcome to expo router Demo!",
+  "DELETE": "Delete"
 }

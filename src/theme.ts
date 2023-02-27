@@ -1,26 +1,87 @@
-import type {DoobooTheme} from 'dooboo-ui';
+import type {DoobooThemeParams} from '@dooboo-ui/theme';
 
 export const colors = {
-  success: '#00BA90',
-  darkGray: '#00000070',
-  mediumGray: '#00000030',
-  lightGray: '#CFCED0',
+  brand: '#1E6EFA',
+  paleBlue05: '#E2F2FF',
+  paleBlue10: '#8BC9FF',
+  green10: '#A1EEDB',
+  green30: '#00D4AB',
+  green50: '#28DB98',
+  gray05: '#F3F9FF',
+  success: '33ff2f',
+  danger: '#ff002e',
+  warning: '#f2df0f',
+  info: '#3a74e7',
+  light: '#ededed',
+  dark: '#151C22',
+  messagePrimary: '#8BC9FF',
+  messageSecondary: '#E2F2FF',
+  apple: '#151E22',
+  google: '#E04238',
+  facebook: '#345997',
+  github: '#151E22',
 };
 
 export type Colors = typeof colors;
 
 export const light = {
   bg: {
-    default: '#FFFFFF',
+    basic: 'white',
+    paper: '#F2F5F6',
+    disabled: '#C4C4C4',
+    border: colors.gray05,
+    card: 'white',
   },
+  text: {
+    basic: '#000',
+    contrast: 'white',
+    placeholder: '#6D6D6D',
+    light: '#1B1B1B',
+  },
+  button: {
+    primary: {
+      bg: colors.brand,
+      text: '#FFF',
+    },
+  },
+  role: {
+    primary: colors.brand,
+    secondary: colors.green10,
+  },
+  header: colors.brand,
+  active: colors.brand,
+  primaryLight: colors.paleBlue10,
 };
 
-export type CustomAppTheme = typeof light & DoobooTheme;
+export type CustomAppTheme = typeof light & DoobooThemeParams;
 
-export const dark = {
+export const dark: CustomAppTheme = {
   bg: {
-    default: '#232323',
+    basic: '#000',
+    paper: colors.dark,
+    disabled: '#515151',
+    border: colors.gray05,
+    card: colors.dark,
   },
+  text: {
+    basic: 'white',
+    contrast: '#000',
+    placeholder: '#6D6D6D',
+    light: '#1B1B1B',
+  },
+  button: {
+    primary: {
+      bg: colors.paleBlue10,
+      text: '#000',
+    },
+  },
+  role: {
+    primary: colors.brand,
+    secondary: colors.green30,
+  },
+  header: '#000',
+  active: colors.paleBlue10,
+  primaryLight: '#151A25',
 };
 
 export const theme = {

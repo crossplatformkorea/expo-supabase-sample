@@ -7,8 +7,6 @@ import {
 } from '@testing-library/react-native';
 import {createTestElement, createTestProps} from '../utils/testUtils';
 
-import type {DataType} from '../../app/index';
-import Intro from '../../app/index';
 import type {ReactElement} from 'react';
 import {useState, useEffect} from 'react';
 import type {RenderAPI} from '@testing-library/react-native';
@@ -17,6 +15,8 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {supabase} from '../../src/supabase';
 import type {User} from '@supabase/supabase-js';
 import {Alert} from 'react-native';
+import type {DataType} from '../../app/(app)';
+import Intro from '../../app/(app)';
 
 let props: any;
 let component: ReactElement;

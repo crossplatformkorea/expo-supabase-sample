@@ -4,6 +4,7 @@ import {createClient} from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://zxoccpdgzsgqeoumujzg.supabase.co';
 const supabaseAnonKey =
+  // eslint-disable-next-line max-len
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4b2NjcGRnenNncWVvdW11anpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzY4NzMxNDQsImV4cCI6MTk5MjQ0OTE0NH0.wNq5hioLesZ9LoLVioNGozNtnjH5GJSmBhPZHbbplEQ';
 
 export interface Database {
