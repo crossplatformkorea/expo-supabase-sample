@@ -17,10 +17,12 @@
 | ----- | ------ |
 | <img src=https://user-images.githubusercontent.com/73378472/220526290-819220a1-aab8-443d-9ae8-0f337d7da11e.gif width="200"> | <img src=https://user-images.githubusercontent.com/73378472/220526294-60fe7104-7c28-411d-bd31-f803bf53aa21.gif width="200"> |
 
+## GUIDE
+
 
 ## SETTING
 
-프로젝트 이동시 [supabase](https://supabase.com/) 에서 프로젝트 생성 후 `supabaseUrl.ts` 에 `supabaseUrl` 와 `supabaseAnonKey` 를 넣어주세요.
+프로젝트 이동시 [supabase](https://supabase.com/) 에서 프로젝트 생성 후 `supabaseUrl.ts` 에 `supabaseUrl` 와 `supabaseAnonKey` 를 넣어주세요.
 ```js
 const supabaseUrl = 'your supabase url';
 const supabaseAnonKey = 'your supabase anon key';
