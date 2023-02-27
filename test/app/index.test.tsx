@@ -1,17 +1,10 @@
-import {
-  fireEvent,
-  render,
-  renderHook,
-  screen,
-  waitFor,
-} from '@testing-library/react-native';
+import {render, renderHook, waitFor} from '@testing-library/react-native';
 import {createTestElement, createTestProps} from '../utils/testUtils';
 
 import type {ReactElement} from 'react';
 import {useState, useEffect} from 'react';
 import type {RenderAPI} from '@testing-library/react-native';
 import renderer, {act} from 'react-test-renderer';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import {supabase} from '../../src/supabase';
 import type {User} from '@supabase/supabase-js';
 import {Alert} from 'react-native';
@@ -109,8 +102,6 @@ describe('[Intro] screen rendering test', () => {
     expect(result.current.dataList).toEqual([{id: 1, name: 'test data'}]);
     expect(Alert.alert).not.toHaveBeenCalled();
   });
-
-  it('renders error when API call fails', async () => {});
 
   it('should render mask', async () => {
     testingLib = render(component);
