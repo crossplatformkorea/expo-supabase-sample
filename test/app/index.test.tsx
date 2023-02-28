@@ -82,6 +82,7 @@ describe('[Intro] screen rendering test', () => {
             return;
           }
 
+          //@ts-ignore
           setDataList((prev) => [...prev, ...resData]);
         };
 
