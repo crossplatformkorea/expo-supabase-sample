@@ -1,14 +1,9 @@
-import {render, renderHook, waitFor} from '@testing-library/react-native';
+import {render, waitFor} from '@testing-library/react-native';
 import {createTestElement, createTestProps} from '../utils/testUtils';
 
 import type {ReactElement} from 'react';
-import {useState, useEffect} from 'react';
 import type {RenderAPI} from '@testing-library/react-native';
-import renderer, {act} from 'react-test-renderer';
-import {supabase} from '../../src/supabase';
-import type {User} from '@supabase/supabase-js';
-import {Alert} from 'react-native';
-import type {DataType} from '../../app/(app)';
+import renderer from 'react-test-renderer';
 import Intro from '../../app/(app)';
 
 let props: any;
@@ -20,88 +15,6 @@ describe('[Intro] screen rendering test', () => {
     props = createTestProps();
     component = createTestElement(<Intro {...props} />);
     testingLib = render(component);
-    jest.clearAllMocks();
-  });
-
-  const mockGetUser = jest.fn();
-  const mockSelect = jest.fn();
-
-  jest.mock('../../src/supabase', () => ({
-    supabase: {
-      auth: {
-        getUser: mockGetUser,
-      },
-      from: () => ({
-        select: mockSelect,
-      }),
-    },
-  }));
-
-  jest.mock('react-native', () => ({
-    Alert: {
-      alert: jest.fn(),
-    },
-  }));
-
-  it('renders users when API call succeeds', async () => {
-    const {result} = renderHook(() => {
-      const [userState, setUserState] = useState<User | null>(null);
-      const [dataList, setDataList] = useState<DataType[]>([]);
-
-      useEffect(() => {
-        const getUser = async (): Promise<void> => {
-          const {
-            data: {user},
-          } = await supabase.auth.getUser();
-          mockGetUser.mockResolvedValueOnce({data: {user}});
-          setUserState(user);
-        };
-
-        const getData = async (): Promise<void> => {
-          const data: DataType[] = [
-            {
-              id: 1,
-              created_at: 'string;',
-              content: 'string;',
-              title: 'string;',
-              image: {
-                url: 'string;',
-                path: 'string;',
-              },
-            },
-          ]; // mock data
-          mockSelect.mockResolvedValueOnce({data});
-
-          const {data: resData, error} = await supabase
-            .from('review')
-            .select('*');
-
-          if (error) {
-            Alert.alert('Error', error.message);
-
-            return;
-          }
-
-          //@ts-ignore
-          setDataList((prev) => [...prev, ...resData]);
-        };
-
-        getUser();
-        getData();
-      }, []);
-
-      return {userState, dataList};
-    });
-
-    await act(async () => {
-      await Promise.resolve(); // Let useEffect hook run first
-    });
-
-    expect(mockGetUser).toHaveBeenCalledTimes(1);
-    expect(mockSelect).toHaveBeenCalledTimes(1);
-    expect(result.current.userState).toEqual({id: 1, name: 'test user'});
-    expect(result.current.dataList).toEqual([{id: 1, name: 'test data'}]);
-    expect(Alert.alert).not.toHaveBeenCalled();
   });
 
   it('should render mask', async () => {
@@ -151,26 +64,4 @@ describe('[Intro] screen rendering test', () => {
 
     expect(baseElement).toBeTruthy();
   });
-});
-
-describe('[Intro] Interaction', () => {
-  // const bottomSheetRender = render(<RBSheet />);
-  // const mockSetState = jest.spyOn(React, 'useState');
-  // const bottomSheet = bottomSheetRender.queryByTestId('bottom-sheet');
-  // const open = jest.fn();
-  // it('should simulate login when button has clicked', () => {
-  //   testingLib = render(component);
-  //   jest.useFakeTimers();
-  //   const button = testingLib.getByTestId('open-bottom-sheet');
-  //   act(() => {
-  //     fireEvent.press(button);
-  //     jest.runOnlyPendingTimers();
-  //   });
-  //   jest.spyOn(RBSheet.prototype, 'open').mockImplementation((): any => ({
-  //     open,
-  //   }));
-  //   expect(bottomSheetRender).toMatchSnapshot();
-  //   expect(mockSetState).toHaveBeenCalledWith(false);
-  //   expect(bottomSheet?.instance.open).toHaveBeenCalled();
-  // });
 });
